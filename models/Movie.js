@@ -20,10 +20,4 @@ const MovieSchema = new mongoose.Schema({
   },
 });
 
-MovieSchema.methods.toJSON = function () {
-  const movie = this.toObject();
-  movie.poster = `${process.env.BASE_URL}/${movie.poster}`; // Update BASE_URL with your actual base URL
-  return movie;
-};
-
 module.exports = mongoose.model("Movie", MovieSchema);
