@@ -46,7 +46,7 @@ const advanceResults = (model, populate) => async (req, res, next) => {
       }
 
       results = await query;
-
+      const totalPages = Math.ceil(total / limit);
       if (endIndex < total) {
         pagination.next = {
           page: page + 1,
@@ -63,6 +63,7 @@ const advanceResults = (model, populate) => async (req, res, next) => {
         page,
         limit,
       };
+      pagination.totalPages = totalPages;
     }
     res.data = {
       status: "success",
