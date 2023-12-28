@@ -1,4 +1,3 @@
-const createError = require("../utils/createError");
 const asyncHandler = require("../middleware/async");
 const User = require("../models/User");
 
@@ -6,10 +5,20 @@ const login = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({
     email: req.body.email,
   }).select("+password");
-  if (!user) throw createError(401, `Email doesn't match`);
+  if (!user){
+    return res.status(401).send({
+      status: "Error",
+      message: "Email doesn't match",
+    });
+  };
 
   const isPassword = await user.matchPassword(req.body.password);
-  if (!isPassword) throw createError(401, `Password doesn't match`);
+  if (!isPassword) {
+    res.status(401).send({
+      status: "Error",
+      message: "Password doesn't match",
+    });
+  }
   sendTokenResponse(user, 200, res, "User logged in Successfully");
 });
 

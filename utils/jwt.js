@@ -1,12 +1,14 @@
 const jwt = require("jsonwebtoken");
-const createError = require("./createError");
 
 const verifyToken = (token, secret) => {
   try {
     return jwt.verify(token, secret);
   } catch (error) {
     if (error.name === "TokenExpiredError")
-      throw createError(401, "Token is expired. Please Login");
+      return res.status(401).send({
+        status: "Error",
+        message: "Token is expired. Please Login",
+      });
 
     throw error;
   }
