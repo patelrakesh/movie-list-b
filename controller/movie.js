@@ -17,7 +17,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: "posters",
-    allowed_formats: ["jpg", "png", "webm", "svg"],
+    allowed_formats: ["jpg", "png", "webm", "svg", "webp"],
   },
 });
 
@@ -98,7 +98,7 @@ const create = asyncHandler(async (req, res, next) => {
             data: movie,
           });
         } catch (validationError) {
-          return createError(res, 400, validationError)
+          return createError(res, 400, validationError);
         }
       }
     );
